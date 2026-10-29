@@ -159,7 +159,7 @@ input[type=text]:focus,input[type=number]:focus{outline:none;border-color:var(--
   <div id="intro">
     <h2>Анаграммы</h2>
     <p>Из перемешанных букв составьте слово: существительное в единственном числе, используя все буквы. Времени 6 минут на все 10 слов, трек играет.</p>
-    <div class="card example"><div class="tiles" style="margin:0"><span>К</span><span>И</span><span>Л</span><span>Ц</span><span>Я</span><span>Е</span></div><span class="arrow">→</span><span>ЛЕКЦИЯ</span></div>
+    <div class="card example"><div class="tiles" style="margin:0"><span>И</span><span>Ч</span><span>К</span><span>У</span><span>Н</span><span>Е</span></div><span class="arrow">→</span><span>УЧЕНИК</span></div>
     <button class="btn" id="go4">Начать, таймер пойдёт сразу</button>
   </div>
   <div id="task" style="display:none">
@@ -219,9 +219,9 @@ const P = new URLSearchParams(location.search);
 const FAST = P.has("fast");                    // только для проверки: ускоряет таймеры
 const WAIT_S = FAST ? 3 : 60;                   // «трек начинает действовать»
 const TASK_S = FAST ? 25 : 360;                 // время на 10 анаграмм
-const WORDS = ["студент","дедлайн","магистр","тетрадь","ноутбук","экзамен","конспект","карандаш","портфель","компьютер"];
-const SCR   = ["ЕТТСНДУ","НЛДДЙЕА","РСИМТГА","ДЕРТЬТА","КУУБОТН","МКЭЕЗНА","ТКЕНОПСК","ДРКНШААА","ЕТОЬЛПФР","ТМЬЕПОЮРК"];
-const KEY = "focusplus_v1_done";
+const WORDS = ["группа","лекция","доклад","задача","сессия","оценка","курсор","лектор","студент","экзамен"];
+const SCR   = ["УГАРПП","ИКЕЯЛЦ","АОЛДДК","АААЗДЧ","ЕЯИССС","АНЦКЕО","РКРОУС","ЕТКРЛО","ТНДУТСЕ","КЭНМАЗЕ"];
+const KEY = "focusplus_v2_done";
 const $ = id => document.getElementById(id);
 const screens = ["s0","s1","s2","s3","s4","s5","s6"];
 const dots = $("dots"); screens.slice(0,6).forEach(()=>dots.appendChild(document.createElement("i")));
