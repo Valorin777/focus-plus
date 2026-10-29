@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F6F3EC">
-<title>Сессия+: быстрая оценка товара</title>
+<title>Конфеты: быстрый опрос</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..700&family=Oswald:wght@500;700&display=swap">
@@ -22,10 +22,6 @@ body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.5 "Golos Text
 .wrap{max-width:560px;margin:0 auto;padding:20px 20px calc(24px + env(safe-area-inset-bottom));min-height:min(100vh,800px);min-height:min(100dvh,800px);display:flex;flex-direction:column}
 header.top{display:flex;align-items:center;gap:10px;padding:6px 0 14px;min-height:46px}
 .brand{font:700 20px/1 Oswald,sans-serif;letter-spacing:.04em;text-transform:uppercase;flex:none}
-.chip{display:none;align-items:center;gap:6px;padding:7px 11px;border-radius:999px;background:var(--ink);color:var(--paper);font:600 13px/1 "Golos Text",sans-serif;white-space:nowrap;animation:chip .3s var(--ease) both}
-.chip.on{display:inline-flex}
-.chip em{font-style:normal;color:#6FD3DB}
-@keyframes chip{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:none}}
 .dots{display:none;gap:6px;margin-left:auto}
 .dots.on{display:flex}
 .dots i{width:8px;height:8px;border-radius:50%;background:var(--line);transition:background-color .3s var(--ease),transform .3s var(--ease)}
@@ -34,7 +30,7 @@ header.top{display:flex;align-items:center;gap:10px;padding:6px 0 14px;min-heigh
 section{display:none}
 section.show{display:flex;flex-direction:column;flex:1;animation:in .28s var(--ease) both}
 @keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-h1{font:700 36px/1.05 Oswald,sans-serif;margin:2px 0 12px;letter-spacing:.005em}
+h1{font:700 36px/1.05 Oswald,sans-serif;margin:2px 0 8px;letter-spacing:.005em;text-wrap:balance}
 h2{font:600 28px/1.15 Oswald,sans-serif;margin:4px 0 12px}
 h3{font:600 22px/1.2 Oswald,sans-serif;margin:0 0 10px}
 h1:focus,h2:focus{outline:none}
@@ -47,45 +43,39 @@ p{margin:0 0 14px}
 .btn:active{transform:scale(.97)}
 .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
 @media (hover:hover){.btn.ghost:hover{background:#fff}}
-.btn:focus-visible,.scale button:focus-visible,.yn button:focus-visible,.back:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+.btn:focus-visible,.opt:focus-visible,.yn button:focus-visible,.back:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
 
-/* карточка товара: сначала картинка и ценник, потом описание */
-.product{background:var(--card);border:1px solid var(--line);border-radius:24px;overflow:hidden;margin:2px 0 14px;box-shadow:0 14px 34px -22px rgba(23,26,51,.45);animation:rise .42s var(--ease) both}
+/* выбор: две конфеты с ценами, один тап */
+.scn{font-size:16px;line-height:1.4;color:var(--ink-2);margin:0 0 14px;text-wrap:pretty}
+.opts{display:grid;gap:12px;margin:2px 0 16px}
+.opt{position:relative;appearance:none;text-align:left;font:inherit;color:inherit;cursor:pointer;display:grid;grid-template-columns:92px 1fr;gap:14px;align-items:center;width:100%;padding:14px 18px 14px 14px;border:1.5px solid var(--line);border-radius:24px;background:var(--card);box-shadow:0 14px 30px -24px rgba(23,26,51,.55);transition:transform .16s var(--ease),border-color .2s var(--ease),background-color .2s var(--ease),box-shadow .2s var(--ease);touch-action:manipulation;animation:rise .42s var(--ease) both}
+.opt+.opt{animation-delay:.07s}
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.pic{position:relative;height:144px;background:linear-gradient(160deg,#D9EEEE 0%,#F6E8DA 100%);display:flex;justify-content:center;align-items:flex-end}
-.pic svg{height:100%;width:auto;display:block}
-.pic .bt{transform-box:fill-box;transform-origin:50% 100%;animation:pop .5s var(--ease) both}
-.pic .bt2{animation-delay:.08s}
-@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.96)}to{opacity:1;transform:none}}
-.pbody{padding:16px 20px 20px}
-.pricerow{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;margin:0 0 14px}
-.price{font:700 52px/1.05 Oswald,sans-serif;white-space:nowrap;font-variant-numeric:tabular-nums}
-.old{font:500 22px/1 Oswald,sans-serif;color:var(--ink-2);text-decoration:line-through;text-decoration-thickness:2px;white-space:nowrap;font-variant-numeric:tabular-nums}
-.old:empty{display:none}
-.badge{position:absolute;left:12px;top:12px;padding:7px 10px 6px;border-radius:11px;background:var(--orange);color:#fff;font:700 18px/1 Oswald,sans-serif;letter-spacing:.04em;box-shadow:0 8px 18px -10px rgba(184,64,28,.9);animation:pop .5s var(--ease) both}
-.product.sale .price{color:var(--orange-d)}
-.pname{font:700 26px/1.1 Oswald,sans-serif;letter-spacing:.015em;margin:0 0 2px}
-.psub{color:var(--ink-2);font-size:15px;margin:0 0 14px}
-.facts{list-style:none;margin:0;padding:0;display:grid;gap:9px}
-.facts li{display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:1.35;text-wrap:pretty}
-.facts li::before{content:"";flex:none;width:18px;height:18px;margin-top:1px;border-radius:50%;background:var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.6 6.3l2.3 2.3 4.5-5' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat}
+.opt:active{transform:scale(.98)}
+@media (hover:hover){.opt:not(.sel):hover{border-color:var(--ink)}}
+.opt.sel{border-color:var(--ink);background:#fff;transform:translateY(-2px);box-shadow:0 20px 34px -22px rgba(23,26,51,.65)}
+.opt::after{content:"";position:absolute;right:14px;top:14px;width:24px;height:24px;border-radius:50%;background:var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.6 6.3l2.3 2.3 4.5-5' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat;opacity:0;transform:scale(.6);transition:opacity .18s var(--ease),transform .22s var(--ease)}
+.opt.sel::after{opacity:1;transform:none}
+.oimg{width:92px;height:92px;border-radius:18px;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#F3E5D3 0%,#EAD9C2 100%)}
+.opt.k .oimg{background:linear-gradient(160deg,#D9EEEE 0%,#F6E8DA 100%)}
+.oimg svg{width:84px;height:84px;display:block}
+.otxt{display:flex;flex-direction:column;gap:3px;min-width:0}
+.oname{font:700 24px/1.1 Oswald,sans-serif;letter-spacing:.015em;padding-right:26px}
+.osub{font-size:14px;line-height:1.3;color:var(--ink-2);text-wrap:pretty}
+.oprice{font:700 38px/1.05 Oswald,sans-serif;margin-top:6px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.oprice.free{color:var(--teal);font-size:34px;letter-spacing:.01em}
 .lead{text-align:center;font-size:15px;line-height:1.45;margin:0 0 10px;text-wrap:pretty}
-.fine{text-align:center;font-size:13px;line-height:1.45;color:var(--ink-2);margin:0 0 6px;text-wrap:pretty}
-.cta{position:sticky;bottom:0;margin:auto -20px 0;padding:14px 20px calc(8px + env(safe-area-inset-bottom));background:linear-gradient(to top,var(--paper) 74%,rgba(246,243,236,0))}
+.fine{text-align:center;font-size:13px;line-height:1.45;color:var(--ink-2);margin:auto 0 6px;text-wrap:pretty}
 
 /* вопросы: текст по центру свободной зоны, кнопки внизу, под большим пальцем */
 .q-top{flex:1;display:flex;flex-direction:column;justify-content:center;padding:4px 0 28px}
 .q-top h2{font:600 clamp(30px,8.6vw,40px)/1.1 Oswald,sans-serif;margin:0;text-wrap:balance}
 .q-bot{padding-bottom:2px}
-.scale{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-.scale button,.yn button{appearance:none;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:600 20px/1 "Golos Text",sans-serif;cursor:pointer;touch-action:manipulation;transition:background-color .18s var(--ease),border-color .18s var(--ease),color .18s var(--ease),transform .16s var(--ease)}
-.scale button{height:60px;padding:0}
-.scale button:active,.yn button:active{transform:scale(.94)}
-.scale button.sel,.yn button.sel{background:var(--ink);border-color:var(--ink);color:var(--paper);transform:translateY(-2px)}
-@media (hover:hover){.scale button:not(.sel):hover,.yn button:not(.sel):hover{border-color:var(--ink)}}
-.scale-l{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--ink-2);margin:10px 2px 0}
 .yn{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.yn button{height:76px;font-size:22px;border-radius:16px}
+.yn button{appearance:none;border:1.5px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink);font:600 22px/1 "Golos Text",sans-serif;height:76px;cursor:pointer;touch-action:manipulation;transition:background-color .18s var(--ease),border-color .18s var(--ease),color .18s var(--ease),transform .16s var(--ease)}
+.yn button:active{transform:scale(.94)}
+.yn button.sel{background:var(--ink);border-color:var(--ink);color:var(--paper);transform:translateY(-2px)}
+@media (hover:hover){.yn button:not(.sel):hover{border-color:var(--ink)}}
 .back{appearance:none;border:0;background:none;color:var(--ink-2);font:500 15px/1 "Golos Text",sans-serif;padding:18px 0 8px;cursor:pointer;touch-action:manipulation}
 @media (hover:hover){.back:hover{color:var(--ink)}}
 
@@ -95,83 +85,82 @@ p{margin:0 0 14px}
 .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--ink);color:var(--paper);padding:12px 18px;border-radius:999px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s var(--ease),transform .25s var(--ease)}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-@media (max-width:400px){h1{font-size:32px}.price{font-size:46px}.pname{font-size:24px}}
-@media (max-height:700px){.pic{height:116px}.pbody{padding:12px 18px 16px}.pricerow{margin-bottom:10px}}
+@media (max-width:400px){h1{font-size:32px}.oname{font-size:22px}.oprice{font-size:34px}.oprice.free{font-size:30px}}
+@media (max-height:700px){.oimg{width:76px;height:76px}.oimg svg{width:70px;height:70px}.opt{grid-template-columns:76px 1fr;padding:10px 16px 10px 10px}.scn{margin-bottom:10px}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header class="top">
-  <div class="brand">Сессия+</div>
-  <div class="chip" id="chip"></div>
+  <div class="brand">Быстрый опрос</div>
   <div class="dots" id="dots" aria-hidden="true"></div>
 </header>
+<noscript><p class="card">Для опроса нужен включённый JavaScript.</p></noscript>
 
-<!-- карточка товара -->
+<!-- вопрос 1: выбор конфеты -->
 <section id="s1" class="show">
-  <p class="eyebrow">Опрос · 20 секунд</p>
-  <h1>Оцените товар</h1>
-  <div class="product" id="product">
-    <div class="pic">
-      <span class="badge" id="badge" hidden>−67%</span>
-      <svg viewBox="0 0 300 168" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
-        <ellipse cx="150" cy="158" rx="124" ry="6.5" fill="#171A33" opacity=".12"/>
-        <g>
-          <rect x="46" y="48" width="140" height="110" rx="12" fill="#0F6B73"/>
-          <path d="M46 60a12 12 0 0 1 12-12h116a12 12 0 0 1 12 12v10H46z" fill="#0B565D"/>
-          <rect x="46" y="88" width="140" height="46" fill="#FFFDF8"/>
-          <text x="116" y="121" text-anchor="middle" font-family="Oswald,Impact,sans-serif" font-weight="700" font-size="27" fill="#171A33" textLength="108" lengthAdjust="spacingAndGlyphs">СЕССИЯ+</text>
-          <circle cx="68" cy="59" r="4.5" fill="#E4572E"/>
-          <text x="116" y="150" text-anchor="middle" font-family="'Golos Text',Arial,sans-serif" font-weight="600" font-size="11.5" fill="#CBE7E9" textLength="84" lengthAdjust="spacingAndGlyphs">12 × 60 мл</text>
-        </g>
-        <g class="bt">
-          <rect x="204" y="86" width="32" height="72" rx="9" fill="#E4572E"/>
-          <rect x="213" y="70" width="14" height="19" rx="3" fill="#B8401C"/>
-          <rect x="209" y="60" width="22" height="12" rx="3.5" fill="#171A33"/>
-          <rect x="204" y="112" width="32" height="26" fill="#FFFDF8"/>
-          <path d="M220 119v12M214 125h12" stroke="#171A33" stroke-width="3" stroke-linecap="round"/>
-        </g>
-        <g class="bt bt2">
-          <rect x="246" y="100" width="30" height="58" rx="9" fill="#E4572E"/>
-          <rect x="254" y="86" width="14" height="17" rx="3" fill="#B8401C"/>
-          <rect x="250" y="77" width="22" height="11" rx="3.5" fill="#171A33"/>
-          <rect x="246" y="121" width="30" height="22" fill="#FFFDF8"/>
-          <path d="M261 126v10M256 131h10" stroke="#171A33" stroke-width="3" stroke-linecap="round"/>
-        </g>
-      </svg>
-    </div>
-    <div class="pbody">
-      <div class="pricerow"><span class="price" id="price"></span><span class="old" id="old"></span></div>
-      <div class="pname">Шоты «Сессия+»</div>
-      <div class="psub">Напиток для концентрации, 12&nbsp;×&nbsp;60&nbsp;мл</div>
-      <ul class="facts">
-        <li>Кофеин, L-теанин и витамины&nbsp;B</li>
-        <li>Вкус лайм&nbsp;— мята, без&nbsp;сахара</li>
-        <li>Для лекций и&nbsp;экзаменов</li>
-      </ul>
-    </div>
+  <p class="eyebrow">Вопрос 1 из 3</p>
+  <h1>Какую конфету возьмёте?</h1>
+  <p class="scn">У кассы в столовой лежат конфеты. Можно взять только одну.</p>
+  <div class="opts" role="group" aria-label="Выберите одну конфету">
+    <button class="opt t" id="optT" type="button" data-v="0">
+      <span class="oimg">
+        <svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+          <ellipse cx="48" cy="86" rx="27" ry="4.5" fill="#171A33" opacity=".14"/>
+          <circle cx="48" cy="41" r="27" fill="#4B2A1B"/>
+          <g fill="#7C4B33">
+            <circle cx="35" cy="27" r="1.7"/><circle cx="45" cy="20" r="1.4"/><circle cx="56" cy="23" r="1.8"/><circle cx="64" cy="32" r="1.5"/>
+            <circle cx="29" cy="40" r="1.4"/><circle cx="40" cy="35" r="1.6"/><circle cx="52" cy="37" r="1.4"/><circle cx="68" cy="45" r="1.7"/>
+            <circle cx="35" cy="50" r="1.6"/><circle cx="47" cy="47" r="1.4"/><circle cx="58" cy="52" r="1.6"/><circle cx="46" cy="30" r="1.2"/>
+          </g>
+          <ellipse cx="37" cy="27" rx="9" ry="5" fill="#fff" opacity=".2" transform="rotate(-28 37 27)"/>
+          <path d="M22 58h52l-4.5 28h-43z" fill="#D9A441"/>
+          <path d="M31 58l2.6 28M40 58l1.3 28M48 58v28M56 58l-1.3 28M65 58l-2.6 28" stroke="#B9822A" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M20.5 58h55" stroke="#C48E2B" stroke-width="3.2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="otxt">
+        <span class="oname">Трюфель</span>
+        <span class="osub">Премиум, шоколад с&nbsp;нежной начинкой</span>
+        <span class="oprice" id="pT"></span>
+      </span>
+    </button>
+    <button class="opt k" id="optK" type="button" data-v="1">
+      <span class="oimg">
+        <svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+          <ellipse cx="48" cy="80" rx="31" ry="4.5" fill="#171A33" opacity=".14"/>
+          <path d="M6 40l20 14-20 14z" fill="#C9462A"/>
+          <path d="M90 40l-20 14 20 14z" fill="#C9462A"/>
+          <rect x="20" y="30" width="56" height="46" rx="15" fill="#E4572E"/>
+          <path d="M33 31c3.5 14 3.5 30 0 44M63 31c-3.5 14-3.5 30 0 44" stroke="#FFFDF8" stroke-width="3" stroke-linecap="round" opacity=".55"/>
+          <ellipse cx="42" cy="41" rx="9.5" ry="3.6" fill="#fff" opacity=".3" transform="rotate(-8 42 41)"/>
+        </svg>
+      </span>
+      <span class="otxt">
+        <span class="oname">Простая конфета</span>
+        <span class="osub">Обычная шоколадная конфета</span>
+        <span class="oprice" id="pK"></span>
+      </span>
+    </button>
   </div>
-  <p class="lead muted">Посмотрите, как в магазине, и ответьте по первому впечатлению. Правильных ответов нет.</p>
-  <p class="fine">Это анонимный учебный опрос студентов ВШБ НИУ ВШЭ. Участие добровольное: нажимая «Оценить товар», вы соглашаетесь участвовать. Закрыть страницу можно в любой момент.</p>
-  <div class="cta"><button class="btn" id="go1" type="button">Оценить товар</button></div>
+  <p class="lead muted">Выберите по первому впечатлению. Правильных ответов нет.</p>
+  <p class="fine">Это анонимный учебный опрос студентов ВШБ НИУ ВШЭ. Участие добровольное: нажимая на конфету, вы соглашаетесь участвовать. Закрыть страницу можно в любой момент.</p>
 </section>
 
-<!-- вопросы 1 и 2 добавляет скрипт -->
-
-<section id="q3">
-  <div class="q-top"><p class="eyebrow">Вопрос 3 из 4</p><h2>Купили бы вы его за эту цену?</h2></div>
+<section id="q2">
+  <div class="q-top"><p class="eyebrow">Вопрос 2 из 3</p><h2>Как вам кажется, трюфель вкуснее простой конфеты?</h2></div>
   <div class="q-bot">
-    <div class="yn" id="yn3" role="group" aria-label="Купили бы вы его за эту цену?">
+    <div class="yn" id="yn2" role="group" aria-label="Как вам кажется, трюфель вкуснее простой конфеты?">
       <button type="button" data-v="0">Нет</button><button type="button" data-v="1">Да</button>
     </div>
     <button class="back" type="button">← Назад</button>
   </div>
 </section>
 
-<section id="q4">
-  <div class="q-top"><p class="eyebrow">Вопрос 4 из 4</p><h2>Вы раньше слышали про этот эксперимент или про книгу Ариели?</h2></div>
+<section id="q3">
+  <div class="q-top"><p class="eyebrow">Вопрос 3 из 3</p><h2>Вы раньше слышали про этот эксперимент или про книгу Ариели?</h2></div>
   <div class="q-bot">
-    <div class="yn" id="yn" role="group" aria-label="Вы раньше слышали про этот эксперимент или про книгу Ариели?">
+    <div class="yn" id="yn3" role="group" aria-label="Вы раньше слышали про этот эксперимент или про книгу Ариели?">
       <button type="button" data-v="0">Нет</button><button type="button" data-v="1">Да</button>
     </div>
     <button class="back" type="button">← Назад</button>
@@ -190,8 +179,8 @@ p{margin:0 0 14px}
   <p class="muted" style="font-size:14px">Отправьте код тому, кто прислал вам ссылку, одним сообщением и больше ничего не добавляя. Не хотите, чтобы ответы вошли в проект, просто не отправляйте.</p>
   <div class="card">
     <h3>Что мы на самом деле проверяли</h3>
-    <p>Шотов «Сессия+» не существует. Всем показывали один и тот же товар, но цену выдавали случайно: одним участникам 1&nbsp;490&nbsp;₽, другим 490&nbsp;₽ со «скидкой 67%». Вам показали <b id="yours"></b>. Описание и вопросы у всех были одинаковыми.</p>
-    <p>Мы проверяли идею из главы 11 книги Ариели «Предсказуемая иррациональность»: цена сама меняет ожидания. Дорогое кажется эффективнее, дешёвое слабее, даже когда товар тот же.</p>
+    <p>Конфет и оплаты на самом деле не было. Всем показывали одни и те же две конфеты, но цены выдавали случайно: одним трюфель за&nbsp;15&nbsp;₽ и простая конфета за&nbsp;1&nbsp;₽, другим трюфель за&nbsp;14&nbsp;₽ и простая конфета бесплатно. Вам показали: <b id="yours"></b>.</p>
+    <p>У всех разница цен была одинаковой, 14&nbsp;₽, поэтому по логике экономиста выбор не должен зависеть от того, что одна цена стала нулём. Мы проверяли идею из главы 3 книги Ариели «Предсказуемая иррациональность»: слово «бесплатно» действует сильнее, чем обычная скидка, и люди чаще берут бесплатное, даже когда другой вариант остаётся выгодной сделкой.</p>
     <p style="margin:0">Пожалуйста, не рассказывайте об этом тем, кто ещё не прошёл.</p>
   </div>
 </section>
@@ -203,11 +192,11 @@ p{margin:0 0 14px}
 "use strict";
 const P = new URLSearchParams(location.search);
 const TEST = P.has("test");                         // только для проверки: участие не запоминается, скорость не проверяется
-const MIN_MS = TEST ? 0 : 3000;                     // три ответа быстрее 3 секунд: нажимал, не читая
-const NB = " ";
-const PRICE = {A:"1"+NB+"490"+NB+"₽", B:"490"+NB+"₽"};
-const KEYD = "sessiya_v5_done", KEYG = "sessiya_v5_group";
-const SALT = 17;                                    // отличает коды этой версии от прошлых
+const MIN_MS = TEST ? 0 : 1500;                     // выбор быстрее 1,5 секунды: нажимал, не читая
+const NB = String.fromCharCode(160);
+const PRICE = {A:{t:15, k:1}, B:{t:14, k:0}};       // цены в рублях: у группы B простая конфета бесплатна
+const KEYD = "konfety_v6_done", KEYG = "konfety_v6_group";
+const SALT = 23;                                    // отличает коды этой версии от прошлых
 const $ = id => document.getElementById(id);
 const store = {
   get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
@@ -224,61 +213,49 @@ function pickGroup(){
 }
 const prevCode = TEST ? null : store.get(KEYD);
 const group = prevCode && /^[AB]-/.test(prevCode) ? prevCode[0] : pickGroup();
-const isA = group==="A";
-const ans = {expect:null, quality:null, buy:null, knew:null};
+const ans = {choice:null, good:null, knew:null};    // choice: 1 = простая (в группе B бесплатная), 0 = трюфель; good: 1 = «трюфель вкуснее»
 const timing = {t0:null, t1:null};
-const QS = [
-  {id:"expect",  q:"Насколько он поможет сосредоточиться?", lo:"совсем не поможет", hi:"очень поможет"},
-  {id:"quality", q:"Какого он качества?",                   lo:"низкого",           hi:"высокого"}
-];
-const ORDER = ["s1","q1","q2","q3","q4","s6"];
+const ORDER = ["s1","q2","q3","s6"];
 
-// ценник
-$("price").textContent = isA ? PRICE.A : PRICE.B;
-$("old").textContent   = isA ? "" : PRICE.A;
-$("badge").hidden = isA;
-$("product").classList.toggle("sale", !isA);
-$("chip").innerHTML = isA ? PRICE.A : PRICE.B+" <em>−67%</em>";
-const dots = $("dots"); for(let i=0;i<4;i++) dots.appendChild(document.createElement("i"));
+const money = n => n===0 ? "Бесплатно" : n + NB + "₽";
+const rubWord = n => (n%10===1 && n%100!==11) ? "рубль" : (n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) ? "рубля" : "рублей";
+const label = (g,t,k) => "трюфель "+money(t).toLowerCase()+", простая конфета "+money(k).toLowerCase();
+// ценники и подписи для скринридеров
+const pr = PRICE[group];
+[["pT","optT","Трюфель",pr.t],["pK","optK","Простая конфета",pr.k]].forEach(([pid,bid,name,n])=>{
+  const el = $(pid); el.textContent = money(n); el.classList.toggle("free", n===0);
+  $(bid).setAttribute("aria-label", name+", "+(n===0 ? "бесплатно" : n+" "+rubWord(n)));
+});
+const dots = $("dots"); for(let i=0;i<3;i++) dots.appendChild(document.createElement("i"));
 
 function show(id){
   document.querySelectorAll("section").forEach(s=>s.classList.toggle("show", s.id===id));
-  const inQ = /^q\d$/.test(id), qi = ORDER.indexOf(id)-1;
-  $("chip").classList.toggle("on", inQ);
+  const qi = ORDER.indexOf(id), inQ = qi>=0 && qi<3;
   dots.classList.toggle("on", inQ);
   [...dots.children].forEach((d,k)=>{ d.className = k<qi ? "done" : k===qi ? "on" : ""; });
   window.scrollTo({top:0});
   const h = document.querySelector("#"+id+" h1, #"+id+" h2");
   if(h){ h.setAttribute("tabindex","-1"); h.focus({preventScroll:true}); }
-  if(id==="q1" && timing.t0==null) timing.t0 = performance.now();
 }
 const go = i => show(ORDER[i]);
 let busy = false;
 function advance(fn){ if(busy) return false; busy = true; setTimeout(()=>{ busy = false; fn(); }, 220); return true; }   // короткая пауза, чтобы выбранная кнопка успела подсветиться
 
-// вопросы 1 и 2: шкала 1-7, ответ сразу ведёт дальше
-QS.forEach((qq,k)=>{
-  const s = document.createElement("section"); s.id = "q"+(k+1);
-  s.innerHTML = '<div class="q-top"><p class="eyebrow">Вопрос '+(k+1)+' из 4</p><h2>'+qq.q+'</h2></div>'
-    + '<div class="q-bot"><div class="scale" role="group" aria-label="'+qq.q+'"></div>'
-    + '<div class="scale-l"><span>'+qq.lo+'</span><span>'+qq.hi+'</span></div>'
-    + '<button class="back" type="button">← Назад</button></div>';
-  const box = s.querySelector(".scale");
-  for(let v=1; v<=7; v++){
-    const b = document.createElement("button"); b.type="button"; b.textContent=v; b.setAttribute("aria-label", v+" из 7");
-    b.onclick = ()=>{
-      if(!advance(()=>go(k+2))) return;
-      box.querySelectorAll("button").forEach(x=>x.classList.toggle("sel", x===b));
-      ans[qq.id] = v;
-    };
-    box.appendChild(b);
-  }
-  s.querySelector(".back").onclick = ()=>go(k);
-  $("q3").before(s);
-});
-$("go1").onclick = ()=>go(1);
+// время отсчитывается от первой отрисовки страницы (если вкладка в фоне, то от момента, когда её открыли)
+requestAnimationFrame(()=>requestAnimationFrame(()=>{ timing.t0 = performance.now(); }));
 
-// вопросы 3 и 4: да или нет; после четвёртого считается код
+// вопрос 1: выбор конфеты, один тап ведёт дальше
+const opts = document.querySelectorAll(".opt");
+opts.forEach(b=>{
+  b.onclick = ()=>{
+    if(!advance(()=>go(1))) return;
+    opts.forEach(x=>x.classList.toggle("sel", x===b));
+    ans.choice = +b.dataset.v;
+    if(timing.t1==null) timing.t1 = performance.now();
+  };
+});
+
+// вопросы 2 и 3: да или нет; после третьего считается код
 function bindYN(sel, key, after){
   const btns = document.querySelectorAll(sel+" button");
   btns.forEach(b=>{
@@ -286,30 +263,30 @@ function bindYN(sel, key, after){
       if(!advance(after)) return;
       btns.forEach(x=>x.classList.toggle("sel", x===b));
       ans[key] = +b.dataset.v;
-      if(key==="buy" && timing.t1==null) timing.t1 = performance.now();
     };
   });
 }
-bindYN("#yn3", "buy",  ()=>go(4));
-bindYN("#yn",  "knew", finish);
-document.querySelector("#q3 .back").onclick = ()=>go(2);
-document.querySelector("#q4 .back").onclick = ()=>go(3);
+bindYN("#yn2", "good", ()=>go(2));
+bindYN("#yn3", "knew", finish);
+document.querySelector("#q2 .back").onclick = ()=>go(0);
+document.querySelector("#q3 .back").onclick = ()=>go(1);
 
-function checksum(g,e,q,b,k,f){ return (SALT + (g==="A"?1:2) + 3*e + 5*q + 7*b + 11*k + 13*f) % 97; }
+function checksum(g,c,q,k,f){ return (SALT + (g==="A"?1:2) + 3*c + 5*q + 7*k + 11*f) % 97; }
 // случайный хвост из 4 знаков: у двух разных людей с одинаковыми ответами коды всё равно разные, а дубль отправки легко найти
 function token(){
   const al="ABCDEFGHJKMNPQRSTUVWXYZ23456789";
   return [...rnd(4)].map(x=>al[x%al.length]).join("");
 }
 function finish(){
-  const fast = (timing.t0!=null && timing.t1!=null && timing.t1-timing.t0 < MIN_MS) ? 1 : 0;
-  const code = [group, ans.expect, ans.quality, ans.buy, ans.knew, fast, checksum(group,ans.expect,ans.quality,ans.buy,ans.knew,fast), token()].join("-");
+  const fast = (!TEST && (timing.t0==null || timing.t1==null || timing.t1-timing.t0 < MIN_MS)) ? 1 : 0;
+  const code = [group, ans.choice, ans.good, ans.knew, fast, checksum(group,ans.choice,ans.good,ans.knew,fast), token()].join("-");
   if(!TEST) store.set(KEYD, code);
   renderResult(code, false);
 }
 function renderResult(code, again){
   $("code").textContent = code;
-  $("yours").textContent = code[0]==="A" ? PRICE.A : PRICE.B+" («скидка 67%»)";
+  const p = PRICE[code[0]];
+  $("yours").textContent = label(code[0], p.t, p.k);
   if(again){ $("rEyebrow").textContent = "Вы уже участвовали"; $("rTitle").textContent = "Ваш код"; }
   const canShare = typeof navigator.share === "function";
   $("share").hidden = !canShare;
@@ -324,7 +301,7 @@ $("copy").onclick = async ()=>{
   const t=$("toast"); t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),1600);
 };
 
-if(prevCode) renderResult(prevCode, true);
+if(prevCode) renderResult(prevCode, true); else show("s1");
 window.__fp = {ans, timing, checksum, group};          // для автотеста
 })();
 </script>
