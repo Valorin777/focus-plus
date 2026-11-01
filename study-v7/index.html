@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F6F3EC">
+<title>Конфеты: быстрый опрос</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..700&family=Oswald:wght@500;700&display=swap">
+<style>
+:root{
+  --ink:#171A33; --ink-2:#4A4E6B; --paper:#F6F3EC; --card:#FFFDF8; --line:#E0DACB;
+  --orange:#E4572E; --orange-d:#B8401C; --teal:#0F6B73;
+  --r:20px; --ease:cubic-bezier(.23,1,.32,1);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.5 "Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:560px;margin:0 auto;padding:20px 20px calc(24px + env(safe-area-inset-bottom));min-height:min(100vh,800px);min-height:min(100dvh,800px);display:flex;flex-direction:column}
+header.top{display:flex;align-items:center;gap:10px;padding:6px 0 14px;min-height:46px}
+.brand{font:700 20px/1 Oswald,sans-serif;letter-spacing:.04em;text-transform:uppercase;flex:none}
+.dots{display:none;gap:6px;margin-left:auto}
+.dots.on{display:flex}
+.dots i{width:8px;height:8px;border-radius:50%;background:var(--line);transition:background-color .3s var(--ease),transform .3s var(--ease)}
+.dots i.on{background:var(--orange);transform:scale(1.25)}
+.dots i.done{background:var(--ink)}
+section{display:none}
+section.show{display:flex;flex-direction:column;flex:1;animation:in .28s var(--ease) both}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h1{font:700 36px/1.05 Oswald,sans-serif;margin:2px 0 8px;letter-spacing:.005em;text-wrap:balance}
+h2{font:600 28px/1.15 Oswald,sans-serif;margin:4px 0 12px}
+h3{font:600 22px/1.2 Oswald,sans-serif;margin:0 0 10px}
+h1:focus,h2:focus{outline:none}
+p{margin:0 0 14px}
+.muted{color:var(--ink-2)}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--orange-d);margin:0 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin:6px 0 16px}
+.btn{appearance:none;border:0;cursor:pointer;width:100%;padding:16px 20px;border-radius:16px;background:var(--ink);color:var(--paper);font:600 17px/1 "Golos Text",sans-serif;transition:transform .16s var(--ease),opacity .2s,background-color .2s,border-color .2s;min-height:56px;touch-action:manipulation}
+@media (hover:hover){.btn:hover{background:#25295A}}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+@media (hover:hover){.btn.ghost:hover{background:#fff}}
+.btn:focus-visible,.opt:focus-visible,.yn button:focus-visible,.back:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+
+/* выбор: две конфеты с ценами, один тап */
+.scn{font-size:16px;line-height:1.4;color:var(--ink-2);margin:0 0 14px;text-wrap:pretty}
+.opts{display:grid;gap:12px;margin:2px 0 16px}
+.opt{position:relative;appearance:none;text-align:left;font:inherit;color:inherit;cursor:pointer;display:grid;grid-template-columns:92px 1fr;gap:14px;align-items:center;width:100%;padding:14px 18px 14px 14px;border:1.5px solid var(--line);border-radius:24px;background:var(--card);box-shadow:0 14px 30px -24px rgba(23,26,51,.55);transition:transform .16s var(--ease),border-color .2s var(--ease),background-color .2s var(--ease),box-shadow .2s var(--ease);touch-action:manipulation;animation:rise .42s var(--ease) both}
+.opt+.opt{animation-delay:.07s}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.opt:active{transform:scale(.98)}
+.opt:disabled{cursor:wait;opacity:.72;transform:none;box-shadow:none}
+@media (hover:hover){.opt:not(.sel):hover{border-color:var(--ink)}}
+.opt.sel{border-color:var(--ink);background:#fff;transform:translateY(-2px);box-shadow:0 20px 34px -22px rgba(23,26,51,.65)}
+.opt::after{content:"";position:absolute;right:14px;top:14px;width:24px;height:24px;border-radius:50%;background:var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.6 6.3l2.3 2.3 4.5-5' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat;opacity:0;transform:scale(.6);transition:opacity .18s var(--ease),transform .22s var(--ease)}
+.opt.sel::after{opacity:1;transform:none}
+.oimg{width:92px;height:92px;border-radius:18px;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#F3E5D3 0%,#EAD9C2 100%)}
+.opt.k .oimg{background:linear-gradient(160deg,#D9EEEE 0%,#F6E8DA 100%)}
+.oimg svg{width:84px;height:84px;display:block}
+.otxt{display:flex;flex-direction:column;gap:3px;min-width:0}
+.oname{font:700 24px/1.1 Oswald,sans-serif;letter-spacing:.015em;padding-right:26px}
+.osub{font-size:14px;line-height:1.3;color:var(--ink-2);text-wrap:pretty}
+.oprice{font:700 38px/1.05 Oswald,sans-serif;margin-top:6px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.oprice.free{color:var(--teal);font-size:34px;letter-spacing:.01em}
+.lead{text-align:center;font-size:15px;line-height:1.45;margin:0 0 10px;text-wrap:pretty}
+.fine{text-align:center;font-size:13px;line-height:1.45;color:var(--ink-2);margin:auto 0 6px;text-wrap:pretty}
+
+/* вопросы: текст по центру свободной зоны, кнопки внизу, под большим пальцем */
+.q-top{flex:1;display:flex;flex-direction:column;justify-content:center;padding:4px 0 28px}
+.q-top h2{font:600 clamp(30px,8.6vw,40px)/1.1 Oswald,sans-serif;margin:0;text-wrap:balance}
+.q-bot{padding-bottom:2px}
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.yn button{appearance:none;border:1.5px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink);font:600 22px/1 "Golos Text",sans-serif;height:76px;cursor:pointer;touch-action:manipulation;transition:background-color .18s var(--ease),border-color .18s var(--ease),color .18s var(--ease),transform .16s var(--ease)}
+.yn button:active{transform:scale(.94)}
+.yn button.sel{background:var(--ink);border-color:var(--ink);color:var(--paper);transform:translateY(-2px)}
+@media (hover:hover){.yn button:not(.sel):hover{border-color:var(--ink)}}
+.back{appearance:none;border:0;background:none;color:var(--ink-2);font:500 15px/1 "Golos Text",sans-serif;padding:18px 0 8px;cursor:pointer;touch-action:manipulation}
+@media (hover:hover){.back:hover{color:var(--ink)}}
+
+/* результат */
+.code{font:700 24px/1.25 "Golos Text",monospace;letter-spacing:.04em;text-align:center;padding:18px 12px;border-radius:16px;background:#fff;border:2px dashed var(--ink);word-break:break-all;user-select:all;margin:2px 0 14px}
+.btns{display:grid;gap:10px;margin:0 0 14px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--ink);color:var(--paper);padding:12px 18px;border-radius:999px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s var(--ease),transform .25s var(--ease)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:400px){h1{font-size:32px}.oname{font-size:22px}.oprice{font-size:34px}.oprice.free{font-size:30px}}
+@media (max-height:700px){.oimg{width:76px;height:76px}.oimg svg{width:70px;height:70px}.opt{grid-template-columns:76px 1fr;padding:10px 16px 10px 10px}.scn{margin-bottom:10px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="brand">Быстрый опрос</div>
+  <div class="dots" id="dots" aria-hidden="true"></div>
+</header>
+<noscript><p class="card">Для опроса нужен включённый JavaScript.</p></noscript>
+
+<!-- вопрос 1: выбор конфеты -->
+<section id="s1">
+  <p class="eyebrow">Вопрос 2 из 3</p>
+  <h1>Какую конфету возьмёте?</h1>
+  <p class="scn">Представьте: у кассы в столовой лежат конфеты. Можно взять только одну.</p>
+  <div class="opts" role="group" aria-label="Выберите одну конфету">
+    <button class="opt t" id="optT" type="button" data-v="0">
+      <span class="oimg">
+        <svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+          <ellipse cx="48" cy="86" rx="27" ry="4.5" fill="#171A33" opacity=".14"/>
+          <circle cx="48" cy="41" r="27" fill="#4B2A1B"/>
+          <g fill="#7C4B33">
+            <circle cx="35" cy="27" r="1.7"/><circle cx="45" cy="20" r="1.4"/><circle cx="56" cy="23" r="1.8"/><circle cx="64" cy="32" r="1.5"/>
+            <circle cx="29" cy="40" r="1.4"/><circle cx="40" cy="35" r="1.6"/><circle cx="52" cy="37" r="1.4"/><circle cx="68" cy="45" r="1.7"/>
+            <circle cx="35" cy="50" r="1.6"/><circle cx="47" cy="47" r="1.4"/><circle cx="58" cy="52" r="1.6"/><circle cx="46" cy="30" r="1.2"/>
+          </g>
+          <ellipse cx="37" cy="27" rx="9" ry="5" fill="#fff" opacity=".2" transform="rotate(-28 37 27)"/>
+          <path d="M22 58h52l-4.5 28h-43z" fill="#D9A441"/>
+          <path d="M31 58l2.6 28M40 58l1.3 28M48 58v28M56 58l-1.3 28M65 58l-2.6 28" stroke="#B9822A" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M20.5 58h55" stroke="#C48E2B" stroke-width="3.2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="otxt">
+        <span class="oname">Трюфель</span>
+        <span class="osub">Премиум, шоколад с&nbsp;нежной начинкой</span>
+        <span class="oprice" id="pT"></span>
+      </span>
+    </button>
+    <button class="opt k" id="optK" type="button" data-v="1">
+      <span class="oimg">
+        <svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+          <ellipse cx="48" cy="80" rx="31" ry="4.5" fill="#171A33" opacity=".14"/>
+          <path d="M6 40l20 14-20 14z" fill="#C9462A"/>
+          <path d="M90 40l-20 14 20 14z" fill="#C9462A"/>
+          <rect x="20" y="30" width="56" height="46" rx="15" fill="#E4572E"/>
+          <path d="M33 31c3.5 14 3.5 30 0 44M63 31c-3.5 14-3.5 30 0 44" stroke="#FFFDF8" stroke-width="3" stroke-linecap="round" opacity=".55"/>
+          <ellipse cx="42" cy="41" rx="9.5" ry="3.6" fill="#fff" opacity=".3" transform="rotate(-8 42 41)"/>
+        </svg>
+      </span>
+      <span class="otxt">
+        <span class="oname">Простая конфета</span>
+        <span class="osub">Обычная шоколадная конфета</span>
+        <span class="oprice" id="pK"></span>
+      </span>
+    </button>
+  </div>
+  <p class="lead muted" id="choiceHint">Прочитайте оба предложения. Через 2 секунды можно выбрать.</p>
+
+</section>
+
+<section id="q2" class="show"><p class="fine">Анонимный учебный опрос студентов ВШБ НИУ ВШЭ, около 30 секунд. Участвуйте один раз, только если ещё не проходили опрос про эти конфеты. Участие добровольное: нажимая ответ, вы соглашаетесь участвовать. Страницу можно закрыть в любой момент.</p>
+  <div class="q-top"><p class="eyebrow">Вопрос 1 из 3</p><h2>Без учёта цены: как вам кажется, трюфель вкуснее простой конфеты?</h2></div>
+  <div class="q-bot">
+    <div class="yn" id="yn2" role="group" aria-label="Как вам кажется, трюфель вкуснее простой конфеты?">
+      <button type="button" data-v="0">Нет</button><button type="button" data-v="1">Да</button>
+    </div>
+  </div>
+</section>
+
+<section id="q3">
+  <div class="q-top"><p class="eyebrow">Вопрос 3 из 3</p><h2>Вы раньше слышали про этот эксперимент или про книгу Ариели?</h2></div>
+  <div class="q-bot">
+    <div class="yn" id="yn3" role="group" aria-label="Вы раньше слышали про этот эксперимент или про книгу Ариели?">
+      <button type="button" data-v="0">Нет</button><button type="button" data-v="1">Да</button>
+    </div>
+    <button class="back" type="button">← Назад</button>
+  </div>
+</section>
+
+<!-- результат, раскрытие, код -->
+<section id="s6">
+  <p class="eyebrow" id="rEyebrow">Готово, спасибо</p>
+  <h2 id="rTitle">Осталось отправить код</h2>
+  <div class="code" id="code"></div>
+  <div class="btns">
+    <button class="btn" id="share" type="button" hidden>Отправить код</button>
+    <button class="btn" id="copy" type="button">Скопировать код</button>
+  </div>
+  <p class="muted" style="font-size:14px">Отправьте код тому, кто прислал вам ссылку, одним сообщением и больше ничего не добавляя. Не хотите, чтобы ответы вошли в проект, просто не отправляйте.</p>
+  <div class="card">
+    <h3>Что мы на самом деле проверяли</h3>
+    <p>Конфет и оплаты на самом деле не было. Всем показывали одни и те же две конфеты, но цены выдавали случайно: одним трюфель за&nbsp;15&nbsp;₽ и простая конфета за&nbsp;1&nbsp;₽, другим трюфель за&nbsp;14&nbsp;₽ и простая конфета бесплатно. Вам показали: <b id="yours"></b>.</p>
+    <p>У всех доплата за трюфель была одинаковой, 14&nbsp;₽. В простой модели с неизменными оценками вкуса и полезностью «ценность минус цена» это сохраняет порядок предпочтений. Мы проверяли идею из главы 3 книги Ариели «Предсказуемая иррациональность»: слово «бесплатно» действует сильнее, чем обычная скидка, и люди чаще берут бесплатное, даже когда другой вариант остаётся выгодной сделкой.</p>
+    <p style="margin:0">Пожалуйста, не рассказывайте об этом тем, кто ещё не прошёл.</p>
+  </div>
+</section>
+</div>
+<div class="toast" id="toast" role="status">Код скопирован</div>
+
+<script>
+(()=>{
+"use strict";
+const P = new URLSearchParams(location.search);
+const TEST = false;                         // только для проверки: участие не запоминается, скорость не проверяется
+const MIN_MS = TEST ? 0 : 2000;                     // минимальное время показа обоих предложений, до этого кнопки заблокированы
+const NB = String.fromCharCode(160);
+const PRICE = {A:{t:15, k:1}, B:{t:14, k:0}};       // цены в рублях: у группы B простая конфета бесплатна
+const KEYD = "konfety_v7_done", KEYG = "konfety_v7_group";
+const SALT = 61;                                    // отличает коды этой версии от прошлых
+const $ = id => document.getElementById(id);
+const store = {
+  get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+};
+const rnd = n => { const a = new Uint8Array(n); (window.crypto||{getRandomValues:x=>{for(let i=0;i<x.length;i++) x[i]=Math.floor(Math.random()*256)}}).getRandomValues(a); return a; };
+
+// группа: случайно 50/50 и запоминается, чтобы перезагрузка не показала вторую цену; ?g=A|B нужен только для проверки
+function pickGroup(){
+  const forced = (P.get("g")||"").toUpperCase();
+  if(TEST && (forced==="A"||forced==="B")) return forced;
+  const saved = store.get(KEYG); if(saved==="A"||saved==="B") return saved;
+  const g = (rnd(1)[0] & 1) ? "A" : "B"; if(!TEST) store.set(KEYG, g); return g;
+}
+const prevCode = TEST ? null : (store.get(KEYD) || store.get("konfety_v6_done"));
+const group = prevCode && /^[AB]-/.test(prevCode) ? prevCode[0] : pickGroup();
+const ans = {choice:null, good:null, knew:null};    // choice: 1 = простая (в группе B бесплатная), 0 = трюфель; good: 1 = «трюфель вкуснее»
+const timing = {t0:null, t1:null};
+const ORDER = ["q2","s1","q3","s6"];
+
+const money = n => n===0 ? "Бесплатно" : n + NB + "₽";
+const rubWord = n => (n%10===1 && n%100!==11) ? "рубль" : (n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) ? "рубля" : "рублей";
+const label = (g,t,k) => "трюфель "+money(t).toLowerCase()+", простая конфета "+money(k).toLowerCase();
+// ценники и подписи для скринридеров
+const pr = PRICE[group];
+[["pT","optT","Трюфель",pr.t],["pK","optK","Простая конфета",pr.k]].forEach(([pid,bid,name,n])=>{
+  const el = $(pid); el.textContent = money(n); el.classList.toggle("free", n===0);
+  $(bid).setAttribute("aria-label", name+", "+(n===0 ? "бесплатно" : n+" "+rubWord(n)));
+});
+const dots = $("dots"); for(let i=0;i<3;i++) dots.appendChild(document.createElement("i"));
+
+function show(id){
+  activeSection = id;
+  if(id === "s1") armChoice();
+  document.querySelectorAll("section").forEach(s=>s.classList.toggle("show", s.id===id));
+  const qi = ORDER.indexOf(id), inQ = qi>=0 && qi<3;
+  dots.classList.toggle("on", inQ);
+  [...dots.children].forEach((d,k)=>{ d.className = k<qi ? "done" : k===qi ? "on" : ""; });
+  window.scrollTo({top:0});
+  const h = document.querySelector("#"+id+" h1, #"+id+" h2");
+  if(h){ h.setAttribute("tabindex","-1"); h.focus({preventScroll:true}); }
+}
+const go = i => show(ORDER[i]);
+let busy = false;
+let choiceTimer = null;
+let activeSection = null;
+function advance(fn){ if(busy) return false; busy = true; setTimeout(()=>{ busy = false; fn(); }, 220); return true; }   // короткая пауза, чтобы выбранная кнопка успела подсветиться
+
+// время отсчитывается от первой отрисовки страницы (если вкладка в фоне, то от момента, когда её открыли)
+function armChoice(){
+  const buttons = document.querySelectorAll(".opt");
+  clearTimeout(choiceTimer);
+  buttons.forEach(b=>b.disabled=true);
+  timing.t0 = null;
+  if(document.visibilityState === "hidden") return;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    if(activeSection !== "s1" || document.visibilityState === "hidden") return;
+    timing.t0 = performance.now();
+    choiceTimer = setTimeout(()=>{
+      if(activeSection !== "s1" || document.visibilityState === "hidden") return;
+      buttons.forEach(b=>b.disabled=false);
+      $("choiceHint").textContent = "Выберите то, что действительно взяли бы. Правильных ответов нет.";
+    }, MIN_MS);
+  }));
+}
+document.addEventListener("visibilitychange",()=>{
+  if(activeSection === "s1") armChoice();
+});
+
+// вопрос 1: выбор конфеты, один тап ведёт дальше
+const opts = document.querySelectorAll(".opt");
+opts.forEach(b=>{
+  b.onclick = ()=>{
+    if(b.disabled || timing.t0==null || performance.now()-timing.t0 < MIN_MS) return;
+    if(!advance(()=>go(2))) return;
+    opts.forEach(x=>x.classList.toggle("sel", x===b));
+    ans.choice = +b.dataset.v;
+    timing.t1 = performance.now();
+  };
+});
+
+// вопросы 2 и 3: да или нет; после третьего считается код
+function bindYN(sel, key, after){
+  const btns = document.querySelectorAll(sel+" button");
+  btns.forEach(b=>{
+    b.onclick = ()=>{
+      if(!advance(after)) return;
+      btns.forEach(x=>x.classList.toggle("sel", x===b));
+      ans[key] = +b.dataset.v;
+    };
+  });
+}
+bindYN("#yn2", "good", ()=>go(1));
+bindYN("#yn3", "knew", finish);
+
+document.querySelector("#q3 .back").onclick = ()=>go(1);
+
+function checksum(g,c,q,k,f){ return (SALT + (g==="A"?1:2) + 3*c + 5*q + 7*k + 11*f) % 97; }
+// случайный хвост из 4 знаков: у двух разных людей с одинаковыми ответами коды всё равно разные, а дубль отправки легко найти
+function token(){
+  const al="ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+  return [...rnd(4)].map(x=>al[x%al.length]).join("");
+}
+function finish(){
+  const fast = (!TEST && (timing.t0==null || timing.t1==null || timing.t1-timing.t0 < MIN_MS)) ? 1 : 0;
+  const code = [group, ans.choice, ans.good, ans.knew, fast, checksum(group,ans.choice,ans.good,ans.knew,fast), token()].join("-");
+  if(!TEST) store.set(KEYD, code);
+  renderResult(code, false);
+}
+function renderResult(code, again){
+  $("code").textContent = code;
+  const p = PRICE[code[0]];
+  $("yours").textContent = label(code[0], p.t, p.k);
+  if(again){ $("rEyebrow").textContent = "Вы уже участвовали"; $("rTitle").textContent = "Ваш код"; }
+  const canShare = typeof navigator.share === "function";
+  $("share").hidden = !canShare;
+  $("copy").classList.toggle("ghost", canShare);
+  show("s6");
+}
+$("share").onclick = async ()=>{ try{ await navigator.share({text:$("code").textContent}); }catch(e){} };
+$("copy").onclick = async ()=>{
+  const txt = $("code").textContent;
+  try{ await navigator.clipboard.writeText(txt); }
+  catch(e){ const r=document.createRange(); r.selectNodeContents($("code")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); try{document.execCommand("copy");}catch(_){} }
+  const t=$("toast"); t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),1600);
+};
+
+if(prevCode) renderResult(prevCode, true); else show("q2");
+if(TEST) window.__fp = {ans, timing, checksum, group};          // для автотеста
+})();
+</script>
+</body>
+</html>
